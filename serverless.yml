@@ -1,0 +1,42 @@
+service: recommendation-ms
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  timeout: 20
+  stage: dev
+  region: eu-central-1
+
+functions:
+  candidateSubmission:
+    handler: dist/index.handler
+    memorySize: 128
+    environment:
+      CRM_URL: https://js2jbdmcwf.execute-api.eu-central-1.amazonaws.com/dev/crm
+      WEATHER_URL: https://kev70qil4h.execute-api.eu-central-1.amazonaws.com/dev/weather
+      HOTSPOT_URL: https://fyv92dmxcl.execute-api.eu-central-1.amazonaws.com/dev/hotspots
+      USER_PROFILE_URL: https://84cbdb01-cb34-485b-b85e-75869a0bfc97-bluemix:d1eaf44901523f612b9a2372acfaf1f715f0597fd5d0d77a39a1c95e8ed358f0@84cbdb01-cb34-485b-b85e-75869a0bfc97-bluemix.cloudantnosqldb.appdomain.cloud:443/tweets/
+      NEARBY_SPONSORS_URL: https://fyv92dmxcl.execute-api.eu-central-1.amazonaws.com/dev/nearbySponsors
+      ROUTE_OPTIMIZATION_URL: https://coms5wdmva.execute-api.eu-central-1.amazonaws.com/dev/optimizedRoute
+    events:
+      - http:
+          path: recommendations
+          method: get
+          request:
+            parameters:
+              querystrings:
+                lat: false
+                lon: false
+                radius: false
+                timeFrame: false
+                numberHotspots: false
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+            allowCredentials: false

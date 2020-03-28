@@ -1,0 +1,19 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "shippedProposals": true,
+        "targets": {
+          "node": "8.10"
+        },
+        "modules": "cjs"
+      }
+    ]
+  ],
+ 
+  // Optional Plugins -> Proposals. Property does have to be used. Plugins have to be installed via npm.
+  // "plugins": [
+    // ["@babel/plugin-proposal-pipeline-operator", { "proposal": "minimal" }],
+  // ]
+ }
